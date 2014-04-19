@@ -89,6 +89,7 @@ public class ReadSerial{
 	public void closePort(){
 		try {
 			port.closePort();
+			System.out.println("DEBUG: port closed");
 		} catch (SerialPortException e) {
 			e.printStackTrace();
 		}
