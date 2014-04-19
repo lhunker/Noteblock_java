@@ -40,6 +40,13 @@ public class ReadSerial extends PApplet{
 	        catch (SerialPortException ex){
 	            System.out.println(ex);
 	        }
+	        
+	        //create file for output
+	        try {
+				Files.write(Paths.get("../test.txt"), new String().getBytes(), StandardOpenOption.CREATE);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 		size(100,100);
 
@@ -50,17 +57,23 @@ public class ReadSerial extends PApplet{
 			Path path = Paths.get(aFile);
 			Files.write(path, write.getBytes(Charset.forName("UTF-8")), StandardOpenOption.APPEND);
 		} catch (IOException e){
-			//do nothing for now 
+			e.printStackTrace();
 		}
 	}
 
 	public void draw()
 	{
-//		String inBuff = port.readStringUntil(10);
-//		if(inBuff != null){
-//			System.out.println(inBuff);
-//			writeFile ("test.txt", inBuff);
-//		}
+		String inBuff = null;
+		try {
+			//inBuff = port.readHexString("\n");
+			inBuff = port.readString();
+		} catch (SerialPortException e) {
+			e.printStackTrace();
+		}
+		if(inBuff != null){
+			System.out.print(inBuff);
+			writeFile ("../test.txt", inBuff);
+		}
 
 	}
 
