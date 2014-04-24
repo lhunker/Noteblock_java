@@ -82,7 +82,8 @@ public class ReadSerial{
 	
 	public void startMidi(MidiControl m){
 		String in = null;
-		int p = -1;
+		int p1 = -1;
+		int p2 = -1;
 		try {
 			//in = port.readString();
 			in = port.readString(7);
@@ -92,14 +93,16 @@ public class ReadSerial{
 		}
 		if(in != null){
 			String n1 = in.substring(0, in.indexOf(','));
+			String n2 = in.substring(in.indexOf(',') + 1, in.indexOf('\r'));
 			try{
-				p = Integer.parseInt(n1);
+				p1 = Integer.parseInt(n1);
+				p2 = Integer.parseInt(n2);
 			} catch (NumberFormatException e){
 				e.printStackTrace();
 			}
 		}
-		if(p != -1){
-			m.playNote(p, 100);
+		if(p1 != -1 && p2!= -1){
+			m.playNotes(new int[] {p1, p2}, new int [] {100, 100});
 		}
 	}
 	
