@@ -12,9 +12,14 @@ package noteblock_java;
  */
 public class ControlPanel extends javax.swing.JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4747409654228885372L;
 	private boolean reading;
+	private boolean mOut;
 	private ReadSerial reader;
-	private Thread readFile;
+	private MidiControl midi;
 
 	/**
 	 * Creates new form ControlPanel
@@ -23,16 +28,9 @@ public class ControlPanel extends javax.swing.JFrame {
 		initComponents();
 		reader = new ReadSerial();
 		reading = false;
-		
-		//declare a new thread to read to file
-		readFile = new Thread(){
-			@Override
-			public void run(){
-				while(reading){
-					reader.pollPort();
-				}
-			}
-		};
+		midi = new MidiControl();
+		mOut = false;
+		System.out.println(new String ("53,57\n").getBytes().length);
 	}
 
 	/**
@@ -49,6 +47,10 @@ public class ControlPanel extends javax.swing.JFrame {
         readFileButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
         lblSelectPort = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        midiSelect = new javax.swing.JComboBox();
+        midiOutButton = new javax.swing.JButton();
+        stopMidi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +76,25 @@ public class ControlPanel extends javax.swing.JFrame {
 
         lblSelectPort.setText("Select a Port: ");
 
+        jLabel1.setText("Select an Output");
+
+        midiSelect.setModel(MidiControl.getOuts());
+
+        midiOutButton.setText("Start Midi Out");
+        midiOutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                midiOutButtonActionPerformed(evt);
+            }
+        });
+
+        stopMidi.setText("Stop Midi");
+        stopMidi.setEnabled(false);
+        stopMidi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopMidiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,16 +102,22 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSelectPort)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(selectPort, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(midiSelect, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(selectPort, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(34, 34, 34)
-                        .addComponent(readFileButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(readFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(midiOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(stopButton))
-                    .addComponent(lblSelectPort))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(stopButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(stopMidi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +131,14 @@ public class ControlPanel extends javax.swing.JFrame {
                     .addComponent(selectPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(readFileButton)
                     .addComponent(stopButton))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(midiSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(midiOutButton)
+                    .addComponent(stopMidi))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         pack();
@@ -115,14 +149,14 @@ public class ControlPanel extends javax.swing.JFrame {
 		readFileButton.setEnabled(false);
 		reader.setPort((String) selectPort.getModel().getSelectedItem());
 		reading = true;
-		 new Thread(){
-				@Override
-				public void run(){
-					while(reading){
-						reader.pollPort();
-					}
+		new Thread(){
+			@Override
+			public void run(){
+				while(reading){
+					reader.pollPort();
 				}
-			}.start();
+			}
+		}.start();
 
 
 	}//GEN-LAST:event_readFileButtonActionPerformed
@@ -131,8 +165,36 @@ public class ControlPanel extends javax.swing.JFrame {
 		stopButton.setEnabled(false);
 		readFileButton.setEnabled(true);
 		reading = false;
-		reader.closePort();
+                if(!mOut){
+                    reader.closePort();
+                }
 	}//GEN-LAST:event_stopButtonActionPerformed
+
+	private void midiOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_midiOutButtonActionPerformed
+		midi.selectOut((String)midiSelect.getSelectedItem());
+		reader.setPort((String) selectPort.getModel().getSelectedItem());
+		midiOutButton.setEnabled(false);
+                stopMidi.setEnabled(true);
+		mOut = true;
+		 new Thread(){
+			 @Override
+			 public void run(){
+				 while(mOut){
+					 reader.startMidi(midi);
+				 }
+			 }
+		 }.start();
+
+	}//GEN-LAST:event_midiOutButtonActionPerformed
+
+    private void stopMidiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopMidiActionPerformed
+        stopMidi.setEnabled(false);
+        midiOutButton.setEnabled(true);
+	mOut = false;
+        if(!reading){
+            reader.closePort();
+        }
+    }//GEN-LAST:event_stopMidiActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -170,10 +232,14 @@ public class ControlPanel extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblSelectPort;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JButton midiOutButton;
+    private javax.swing.JComboBox midiSelect;
     private javax.swing.JButton readFileButton;
     private javax.swing.JComboBox selectPort;
     private javax.swing.JButton stopButton;
+    private javax.swing.JButton stopMidi;
     // End of variables declaration//GEN-END:variables
 }

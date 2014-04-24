@@ -13,16 +13,11 @@ import javax.swing.DefaultComboBoxModel;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
-import processing.core.*;
 import themidibus.*;
 
 
 public class ReadSerial{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	private SerialPort port;
 
@@ -74,7 +69,6 @@ public class ReadSerial{
 	{
 		String inBuff = null;
 		try {
-			//inBuff = port.readHexString("\n");
 			inBuff = port.readString();
 		} catch (SerialPortException e) {
 			e.printStackTrace();
@@ -84,6 +78,29 @@ public class ReadSerial{
 			writeFile ("../test.txt", inBuff);
 		}
 
+	}
+	
+	public void startMidi(MidiControl m){
+		String in = null;
+		int p = -1;
+		try {
+			//in = port.readString();
+			in = port.readString(7);
+			System.out.print(in);
+		} catch (SerialPortException e) {
+			e.printStackTrace();
+		}
+		if(in != null){
+			String n1 = in.substring(0, in.indexOf(','));
+			try{
+				p = Integer.parseInt(n1);
+			} catch (NumberFormatException e){
+				e.printStackTrace();
+			}
+		}
+		if(p != -1){
+			m.playNote(p, 100);
+		}
 	}
 	
 	public void closePort(){
