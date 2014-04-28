@@ -124,5 +124,15 @@ public class ReadSerial{
 			}
 		}
 	}
+	
+	public void setProg(int prog){
+		if(port.isOpened()){
+			try {
+				port.writeString("P" + prog + "\n");
+			} catch (SerialPortException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
