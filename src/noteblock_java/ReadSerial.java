@@ -21,6 +21,10 @@ public class ReadSerial{
 
 	private SerialPort port;
 
+	/**
+	 * sends a comboBox model with the available ports
+	 * @return a comboBox model with available strings
+	 */
 	public static ComboBoxModel<String> getPorts(){
 		DefaultComboBoxModel<String> m;
 		m = new DefaultComboBoxModel<String>();
@@ -32,6 +36,9 @@ public class ReadSerial{
 		return m;
 	}
 
+	/**
+	 * a default constructor
+	 */
 	public ReadSerial()
 	{
 		//create file for output
@@ -43,6 +50,10 @@ public class ReadSerial{
 
 	}
 
+	/**
+	 * starts the serial reader with the specified port
+	 * @param p the name of the port to open
+	 */
 	public void setPort(String p){
 		//declare new serial port
 		port = new SerialPort("COM13");
@@ -56,6 +67,11 @@ public class ReadSerial{
 
 	}
 
+	/**
+	 * write the input to the specified file
+	 * @param aFile the file path to write to
+	 * @param write the string to write
+	 */
 	private void writeFile(String aFile, String write){
 		try{
 			Path path = Paths.get(aFile);
@@ -65,6 +81,9 @@ public class ReadSerial{
 		}
 	}
 
+	/**
+	 * polls the serial port for input then writes it to the file
+	 */
 	public void pollPort()
 	{
 		String inBuff = null;
@@ -80,7 +99,11 @@ public class ReadSerial{
 
 	}
 
-	public void startMidi(MidiControl m){
+	/**
+	 * sends the midi signal from the cube to the midi controller
+	 * @param m the midi controller to send the note to
+	 */
+	public void sendMidi(MidiControl m){
 		String in = null;
 		int p1 = -1;
 		int p2 = -1;
@@ -106,6 +129,9 @@ public class ReadSerial{
 		}
 	}
 
+	/**
+	 * closes the serial port
+	 */
 	public void closePort(){
 		try {
 			port.closePort();
@@ -115,6 +141,9 @@ public class ReadSerial{
 		}
 	}
 
+	/**
+	 * sends the toggle cub sound signal if the port is open
+	 */
 	public void soundSwitch(){
 		if(port.isOpened()){
 			try {
@@ -125,6 +154,10 @@ public class ReadSerial{
 		}
 	}
 	
+	/**
+	 * sends the signal to change the cube program
+	 * @param prog the program number to change to
+	 */
 	public void setProg(int prog){
 		if(port.isOpened()){
 			try {

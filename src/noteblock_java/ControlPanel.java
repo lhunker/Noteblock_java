@@ -180,7 +180,7 @@ public class ControlPanel extends javax.swing.JFrame {
 			 @Override
 			 public void run(){
 				 while(mOut){
-					 reader.startMidi(midi);
+					 reader.sendMidi(midi);
 				 }
 			 }
 		 }.start();
