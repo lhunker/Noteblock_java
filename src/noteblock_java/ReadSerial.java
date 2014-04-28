@@ -13,7 +13,6 @@ import javax.swing.DefaultComboBoxModel;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
-import themidibus.*;
 
 
 public class ReadSerial{
