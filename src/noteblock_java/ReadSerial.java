@@ -79,7 +79,7 @@ public class ReadSerial{
 		}
 
 	}
-	
+
 	public void startMidi(MidiControl m){
 		String in = null;
 		int p1 = -1;
@@ -105,13 +105,23 @@ public class ReadSerial{
 			m.playNotes(new int[] {p1, p2}, new int [] {100, 100});
 		}
 	}
-	
+
 	public void closePort(){
 		try {
 			port.closePort();
 			System.out.println("DEBUG: port closed");
 		} catch (SerialPortException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void soundSwitch(){
+		if(port.isOpened()){
+			try {
+				port.writeString("S\n");
+			} catch (SerialPortException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
