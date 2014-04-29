@@ -166,5 +166,13 @@ public class ReadSerial{
 			}
 		}
 	}
+        
+        /**
+         * determines if a port is currently open
+         * @return whether the port is open
+         */
+        public boolean isOpen(){
+            return (port != null && port.isOpened());
+        }
 
 }
