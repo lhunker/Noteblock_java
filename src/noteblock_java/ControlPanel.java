@@ -6,6 +6,8 @@
 
 package noteblock_java;
 
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author Lukas
@@ -42,6 +44,7 @@ public class ControlPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        programGroup = new javax.swing.ButtonGroup();
         lblTitle = new javax.swing.JLabel();
         selectPort = new javax.swing.JComboBox();
         readFileButton = new javax.swing.JButton();
@@ -51,6 +54,11 @@ public class ControlPanel extends javax.swing.JFrame {
         midiSelect = new javax.swing.JComboBox();
         midiOutButton = new javax.swing.JButton();
         stopMidi = new javax.swing.JButton();
+        cubePanel = new javax.swing.JPanel();
+        soundButton = new javax.swing.JButton();
+        prog1 = new javax.swing.JRadioButton();
+        prog2 = new javax.swing.JRadioButton();
+        prog3 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,28 +103,93 @@ public class ControlPanel extends javax.swing.JFrame {
             }
         });
 
+        cubePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Cube Controls"));
+        cubePanel.setName("test"); // NOI18N
+
+        soundButton.setText("Cube Sound On/Off");
+        soundButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                soundButtonActionPerformed(evt);
+            }
+        });
+
+        programGroup.add(prog1);
+        prog1.setSelected(true);
+        prog1.setText("Program 1");
+        prog1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prog1ActionPerformed(evt);
+            }
+        });
+
+        programGroup.add(prog2);
+        prog2.setText("Program 2");
+        prog2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prog2ActionPerformed(evt);
+            }
+        });
+
+        programGroup.add(prog3);
+        prog3.setText("Program 3");
+        prog3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prog3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout cubePanelLayout = new javax.swing.GroupLayout(cubePanel);
+        cubePanel.setLayout(cubePanelLayout);
+        cubePanelLayout.setHorizontalGroup(
+            cubePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cubePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(soundButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(cubePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(prog3)
+                    .addComponent(prog2)
+                    .addComponent(prog1))
+                .addGap(56, 56, 56))
+        );
+        cubePanelLayout.setVerticalGroup(
+            cubePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cubePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(cubePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(soundButton)
+                    .addComponent(prog1))
+                .addGap(27, 27, 27)
+                .addComponent(prog2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(prog3)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSelectPort)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(midiSelect, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(selectPort, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(readFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(midiOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(stopButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(stopMidi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(cubePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblSelectPort)
+                        .addComponent(jLabel1)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(midiSelect, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(selectPort, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(34, 34, 34)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(readFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(midiOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(stopButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(stopMidi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -138,7 +211,9 @@ public class ControlPanel extends javax.swing.JFrame {
                     .addComponent(midiSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(midiOutButton)
                     .addComponent(stopMidi))
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(cubePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -196,6 +271,32 @@ public class ControlPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_stopMidiActionPerformed
 
+    private void soundButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundButtonActionPerformed
+        //TODO add open port switch
+        reader.soundSwitch();
+    }//GEN-LAST:event_soundButtonActionPerformed
+
+    private void prog1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prog1ActionPerformed
+        if(prog1.isSelected()){
+            //TODO check that port is open
+            reader.setProg(1);
+        }
+    }//GEN-LAST:event_prog1ActionPerformed
+
+    private void prog2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prog2ActionPerformed
+        if(prog2.isSelected()){
+            //TODO check that port is open
+            reader.setProg(2);
+        }
+    }//GEN-LAST:event_prog2ActionPerformed
+
+    private void prog3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prog3ActionPerformed
+        if(prog3.isSelected()){
+            //TODO check that port is open
+            reader.setProg(3);
+        }
+    }//GEN-LAST:event_prog3ActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -232,13 +333,19 @@ public class ControlPanel extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel cubePanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblSelectPort;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JButton midiOutButton;
     private javax.swing.JComboBox midiSelect;
+    private javax.swing.JRadioButton prog1;
+    private javax.swing.JRadioButton prog2;
+    private javax.swing.JRadioButton prog3;
+    private javax.swing.ButtonGroup programGroup;
     private javax.swing.JButton readFileButton;
     private javax.swing.JComboBox selectPort;
+    private javax.swing.JButton soundButton;
     private javax.swing.JButton stopButton;
     private javax.swing.JButton stopMidi;
     // End of variables declaration//GEN-END:variables

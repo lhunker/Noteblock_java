@@ -144,7 +144,7 @@ public class ReadSerial{
 	 * sends the toggle cub sound signal if the port is open
 	 */
 	public void soundSwitch(){
-		if(port.isOpened()){
+		if(port != null && port.isOpened()){
 			try {
 				port.writeString("S\n");
 			} catch (SerialPortException e) {
@@ -158,7 +158,7 @@ public class ReadSerial{
 	 * @param prog the program number to change to
 	 */
 	public void setProg(int prog){
-		if(port.isOpened()){
+		if(port != null && port.isOpened()){
 			try {
 				port.writeString("P" + prog + "\n");
 			} catch (SerialPortException e) {
