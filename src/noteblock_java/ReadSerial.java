@@ -55,7 +55,7 @@ public class ReadSerial{
 	 */
 	public void setPort(String p){
 		//declare new serial port
-		port = new SerialPort("COM13");
+		port = new SerialPort(p);
 		try {
 			System.out.println("DEBUG: Port opened: " + port.openPort());
 			System.out.println("DEBUG: Params setted: " + port.setParams(9600, 8, 1, 0));

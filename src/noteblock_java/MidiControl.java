@@ -63,7 +63,7 @@ public class MidiControl {
 	 */
 	public void playNotes(int[] nums, int[]dur){
 		for (int i = 0; i < nums.length; i++){
-			Note n = new Note(i, nums[i], 70, dur[i]);
+			Note n = new Note(i, nums[i], 100, dur[i]);
 			midi.sendNoteOn(n);
 		}
 	}
