@@ -26,7 +26,7 @@ public class ReadSerial{
 	 */
 	public static ComboBoxModel<String> getPorts(){
 		DefaultComboBoxModel<String> m;
-		m = new DefaultComboBoxModel<String>();
+		m = new DefaultComboBoxModel<>();
 		String[] ports = SerialPortList.getPortNames();
 		for(String s : ports){
 			m.addElement(s);
@@ -44,7 +44,7 @@ public class ReadSerial{
 		try {
 			Files.write(Paths.get("../test.txt"), new String().getBytes(), StandardOpenOption.CREATE);
 		} catch (IOException e) {
-			e.printStackTrace();
+                    //TODO handle exception
 		}
 
 	}

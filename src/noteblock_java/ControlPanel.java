@@ -5,8 +5,6 @@
  */
 package noteblock_java;
 
-import java.awt.event.ActionEvent;
-
 /**
  *
  * @author Lukas
@@ -19,8 +17,8 @@ public class ControlPanel extends javax.swing.JFrame {
     private static final long serialVersionUID = 4747409654228885372L;
     private boolean reading;
     private boolean mOut;
-    private ReadSerial reader;
-    private MidiControl midi;
+    private final ReadSerial reader;
+    private final MidiControl midi;
 
     /**
      * Creates new form ControlPanel
@@ -31,7 +29,6 @@ public class ControlPanel extends javax.swing.JFrame {
         reading = false;
         midi = new MidiControl();
         mOut = false;
-        System.out.println(new String("53,57\n").getBytes().length);
     }
 
     /**
@@ -345,6 +342,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ControlPanel().setVisible(true);
             }
