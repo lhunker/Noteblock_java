@@ -2,6 +2,9 @@
  * 
  */
 package noteblock_java;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
@@ -53,6 +56,12 @@ public class MidiControl {
 	public void playNote(int num, int dur){
 		Note n = new Note(1, num, 70, dur);
 		midi.sendNoteOn(n);
+            try {
+                sleep(90);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MidiControl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                midi.sendNoteOff(n);
 	}
 	
 	/**
@@ -65,6 +74,15 @@ public class MidiControl {
 		for (int i = 0; i < nums.length; i++){
 			Note n = new Note(i, nums[i], 100, dur[i]);
 			midi.sendNoteOn(n);
+		}
+            try {
+                sleep(90);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MidiControl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                for (int i = 0; i < nums.length; i++){
+			Note n = new Note(i, nums[i], 100, dur[i]);
+			midi.sendNoteOff(n);
 		}
 	}
 }
