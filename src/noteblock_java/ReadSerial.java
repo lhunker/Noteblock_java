@@ -174,5 +174,24 @@ public class ReadSerial{
         public boolean isOpen(){
             return (port != null && port.isOpened());
         }
+        
+        public void debugMode(){
+            if(port != null && port.isOpened()){
+			try {
+				port.writeString("D\n");
+			} catch (SerialPortException e) {
+				e.printStackTrace();
+			}
+		}
+        }
 
+         public void runMode(){
+            if(port != null && port.isOpened()){
+			try {
+				port.writeString("R\n");
+			} catch (SerialPortException e) {
+				e.printStackTrace();
+			}
+		}
+        }
 }
