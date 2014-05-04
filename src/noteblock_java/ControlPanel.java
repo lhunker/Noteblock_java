@@ -60,6 +60,7 @@ public class ControlPanel extends javax.swing.JFrame {
         debugButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Noteblock Control Panel");
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblTitle.setText("Noteblock Control Panel");
